@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>TW - @yield('title')</title>
-    <link rel='shortcut icon' type='image/x-icon' href="{{ asset('backend/assets/img/favicon.ico') }}" />
+    <link rel='shortcut icon' type='image/x-icon' href="{{ asset('images/tw-logo.png') }}" />
     <link rel="stylesheet" href="{{ asset('backend/assets/css/app.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/components.css') }}">

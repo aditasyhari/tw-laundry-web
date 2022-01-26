@@ -17,6 +17,14 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/login', function () {
+    return view('backend.auth.login');
+});
+
+Route::get('/register', function () {
+    return view('backend.auth.register');
+});
+
 Route::get('/dashboard', function () {
     return view('backend.dashboard.dashboard');
 });
