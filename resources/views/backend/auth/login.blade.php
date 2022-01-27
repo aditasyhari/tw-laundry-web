@@ -25,7 +25,7 @@
                         <div class="d-block">
                             <label for="password" class="control-label">Password</label>
                             <div class="float-right">
-                            <a href="auth-forgot-password.html" class="text-small">
+                            <a href="{{ route('password.request') }}" class="text-small">
                                 Lupa Password?
                             </a>
                             </div>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="row sm-gutters">
                     <div class="col-6">
-                        <a class="btn btn-block btn-social btn-danger">
+                        <a class="btn btn-block btn-social btn-danger" href="{{ url('auth/google') }}">
                             <span class="fab fa-google-plus"></span> Google
                         </a>
                     </div>
