@@ -102,16 +102,6 @@
             <div class="card-header">
                 <h4>Revenue chart</h4>
                 <div class="card-header-action">
-                <div class="dropdown">
-                    <a href="#" data-toggle="dropdown" class="btn btn-warning dropdown-toggle">Options</a>
-                    <div class="dropdown-menu">
-                    <a href="#" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
-                    <a href="#" class="dropdown-item has-icon"><i class="far fa-edit"></i> Edit</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item has-icon text-danger"><i class="far fa-trash-alt"></i>
-                        Delete</a>
-                    </div>
-                </div>
                 <a href="#" class="btn btn-primary">View All</a>
                 </div>
             </div>

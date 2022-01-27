@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Webpage Title -->
-    <title>Twingky Wingky Laundry</title>
+    <title>TW - Laundry</title>
     
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -13,8 +12,6 @@
     <link href="{{ asset('frontend/css/fontawesome-all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/swiper.css') }}" rel="stylesheet">
 	<link href="{{ asset('frontend/css/styles.css') }}" rel="stylesheet">
-	
-	<!-- Favicon  -->
     <link rel="icon" href="{{ asset('images/tw-logo.png') }}">
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbarExample">
@@ -42,11 +39,15 @@
                         <a class="nav-link" href="#services">Layanan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#orders">Alur Pemesanan</a>
+                        <a class="nav-link" href="#order">Alur Pemesanan</a>
                     </li>
                 </ul>
                 <span class="nav-item">
+                    @if(Auth::user())
+                    <a class="btn-solid-sm" href="{{ url('/dashboard') }}">Dashboard</a>
+                    @else
                     <a class="btn-solid-sm" href="{{ url('/login') }}">Login</a>
+                    @endif
                 </span>
             </div>
         </div>
@@ -169,6 +170,23 @@
         </div>
     </div>
     <!-- end of Services -->
+
+    <!-- order -->
+    <div id="order" class="form-1" style="margin-top: -170px">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="h2-heading"><span>Alur</span><br> Pemesanan</h2>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <img src="{{ asset('images/alur-order.jpg') }}" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of order -->
 
     <!-- Footer -->
     <div class="footer bg-gray">

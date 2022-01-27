@@ -30,6 +30,7 @@ class User extends Authenticatable
         'google_id',
         'role',
         'no_telp',
+        'profile_photo_url'
     ];
 
     /**
@@ -58,7 +59,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $appends = [
-        'profile_photo_url',
-    ];
+    // protected $appends = [
+    //     'profile_photo_url',
+    // ];
 }

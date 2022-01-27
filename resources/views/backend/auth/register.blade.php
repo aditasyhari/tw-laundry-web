@@ -14,41 +14,44 @@
               </div>
               <div class="card-body">
                 <form method="POST">
+                  @csrf
+                  <div class="form-group">
+                    <label for="frist_name">Nama</label>
+                    <input type="text" class="form-control" name="name" autofocus>
+                  </div>
                   <div class="row">
                     <div class="form-group col-6">
-                      <label for="frist_name">First Name</label>
-                      <input id="frist_name" type="text" class="form-control" name="frist_name" autofocus>
+                      <label for="email">Email</label>
+                      <input id="email" type="email" class="form-control" name="email">
+                      <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-group col-6">
-                      <label for="last_name">Last Name</label>
-                      <input id="last_name" type="text" class="form-control" name="last_name">
+                      <label for="last_name">No. Telp</label>
+                      <input type="text" class="form-control" name="no_telp">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="email">
-                    <div class="invalid-feedback">
-                    </div>
+                    <label for="last_name">Alamat</label>
+                    <textarea name="address" class="form-control"></textarea>
                   </div>
                   <div class="row">
                     <div class="form-group col-6">
                       <label for="password" class="d-block">Password</label>
-                      <input id="password" type="password" class="form-control pwstrength" data-indicator="pwindicator"
-                        name="password">
+                      <input id="password" type="password" class="form-control pwstrength" data-indicator="pwindicator" name="password">
                       <div id="pwindicator" class="pwindicator">
                         <div class="bar"></div>
                         <div class="label"></div>
                       </div>
                     </div>
                     <div class="form-group col-6">
-                      <label for="password2" class="d-block">Password Confirmation</label>
+                      <label for="password2" class="d-block">Konfirmasi Password</label>
                       <input id="password2" type="password" class="form-control" name="password-confirm">
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" name="agree" class="custom-control-input" id="agree">
-                      <label class="custom-control-label" for="agree">I agree with the terms and conditions</label>
+                      <label class="custom-control-label" for="agree">Saya setuju dengan ketentuan yang berlaku.</label>
                     </div>
                   </div>
                   <div class="form-group">
@@ -59,7 +62,7 @@
                 </form>
               </div>
               <div class="mb-4 text-muted text-center">
-                Already Registered? <a href="auth-login.html">Login</a>
+                Sudah punya akun? <a href="{{ url('login') }}">Login</a>
               </div>
             </div>
     </div>
