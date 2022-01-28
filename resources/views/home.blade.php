@@ -21,7 +21,7 @@
         <div class="container">
 
             <!-- Image Logo -->
-            <a class="navbar-brand logo-image" href="#"><img src="{{ asset('images/tw-logo.png') }}" alt="logo" style="max-width: 60px"></a> 
+            <a class="navbar-brand logo-image" href="#"><img src="{{ asset('images/tw-logo.png') }}" alt="logo" style="max-width: 50px"></a> 
 
             <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -68,7 +68,7 @@
                 </div> 
                 <div class="col-lg-6 col-xl-7">
                     <div class="image-container">
-                        <img class="img-fluid" src="{{ asset('frontend/images/header-illustration.svg') }}" alt="alternative">
+                        <img class="img-fluid" src="{{ asset('images/wash.png') }}" alt="alternative">
                     </div>
                 </div> 
             </div>
