@@ -13,7 +13,8 @@
                 <h4>Login</h4>
             </div>
             <div class="card-body">
-                <form method="POST" action="#" class="needs-validation" novalidate="">
+                <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate="">
+                    @csrf
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
@@ -51,7 +52,7 @@
                         </a>
                     </div>
                     <div class="col-6">
-                        <a class="btn btn-block btn-social btn-success">
+                        <a class="btn btn-block btn-social btn-success" href="{{ url('auth/wa') }}">
                             <span class="fab fa-whatsapp"></span> Whatsapp
                         </a>
                     </div>
