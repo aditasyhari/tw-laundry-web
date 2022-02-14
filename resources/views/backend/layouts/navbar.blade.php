@@ -69,7 +69,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
                 <div class="dropdown-title">{{ Auth::user()->name }}</div>
-                <a href="#" class="dropdown-item has-icon">
+                <a href="{{ url('profile') }}" class="dropdown-item has-icon">
                     <i class="far fa-user"></i> Profile
                 </a> 
                 <a href="#" class="dropdown-item has-icon">
