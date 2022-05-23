@@ -26,15 +26,20 @@ class GoogleController extends Controller
             // dd($user->avatar);
 
             if($finduser){
+                if($finduser->email_verified_at == null) {
+                    User::where('google_id', $user->id)->orWhere('email', $user->email)->update([
+                        'email_verified_at' => date("Y-m-d H:i:s")
+                    ]);
+                }
                 Auth::login($finduser);
                 return redirect()->intended('dashboard');
             } else {
                 $newUser = User::create([
-                    'name' => $user->name,
+                    'nama' => $user->name,
                     'email' => $user->email,
+                    'email_verified_at' => date("Y-m-d H:i:s"),
                     'google_id'=> $user->id,
-                    'password' => Hash::make('password'),
-                    'profile_photo_url' => $user->avatar
+                    'photo' => $user->avatar
                 ]);
 
                 Auth::login($newUser);

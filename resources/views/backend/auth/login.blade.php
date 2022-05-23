@@ -13,6 +13,11 @@
                 <h4>Login</h4>
             </div>
             <div class="card-body">
+                @if ($message = Session::get('error'))
+                <div class="alert alert-danger alert-block">
+                    <strong>{{ $message }}</strong>
+                </div>
+                @endif
                 <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate="">
                     @csrf
                     <div class="form-group">
@@ -26,9 +31,9 @@
                         <div class="d-block">
                             <label for="password" class="control-label">Password</label>
                             <div class="float-right">
-                            <a href="#" class="text-small">
+                            <!-- <a href="#" class="text-small">
                                 Lupa Password?
-                            </a>
+                            </a> -->
                             </div>
                         </div>
                         <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
@@ -43,7 +48,7 @@
                     </div>
                 </form>
                 <div class="text-center mt-4 mb-3">
-                    <div class="text-job text-muted">Login With</div>
+                    <div class="text-job text-muted">Login Dengan</div>
                 </div>
                 <div class="row sm-gutters">
                     <div class="col-6">

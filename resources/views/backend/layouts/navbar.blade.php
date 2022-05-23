@@ -60,11 +60,7 @@
         </li>
         <li class="dropdown">
             <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                @if (Auth::user()->profile_photo_url)
-                    <img alt="image" src="{{ Auth::user()->profile_photo_url }}" class="user-img-radious-style">
-                @else
-                    <img alt="image" src="{{ asset('backend/assets/img/user.png') }}" class="user-img-radious-style">
-                @endif
+                <img alt="image" src="{{ asset('images/default.jpg') }}" class="user-img-radious-style">
                 <span class="d-sm-none d-lg-inline-block"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
@@ -72,9 +68,6 @@
                 <a href="{{ url('profile') }}" class="dropdown-item has-icon">
                     <i class="far fa-user"></i> Profile
                 </a> 
-                <a href="#" class="dropdown-item has-icon">
-                    <i class="fas fa-cog"></i> Settings
-                </a>
                 <div class="dropdown-divider"></div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

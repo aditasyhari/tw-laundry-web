@@ -1,20 +1,5 @@
 <?php
 
-use Twilio\Rest\Client;
-
-if(!function_exists("whatsappNotif")){
-
-    function whatsappNotif(string $to, string $body)
-    {
-        $sid    = getenv("TWILIO_AUTH_SID");
-        $token  = getenv("TWILIO_AUTH_TOKEN");
-        $wa_from= getenv("TWILIO_WHATSAPP_FROM");
-        $twilio = new Client($sid, $token);
-        
-        return $twilio->messages->create("whatsapp:$to",["from" => "whatsapp:$wa_from", "body" => $body]);
-    }
-}
-
 if(!function_exists("gantiFormatNomor")){
     function gantiFormatNomor($nomorhp) {
         //Terlebih dahulu kita trim dl
@@ -32,13 +17,70 @@ if(!function_exists("gantiFormatNomor")){
         if(!preg_match('/[^+0-9]/',trim($nomorhp))){
             // cek apakah no hp karakter 1-3 adalah +62
             if(substr(trim($nomorhp), 0, 3)=='+62'){
-                $nomorhp= trim($nomorhp);
+                $nomorhp= '0'.substr($nomorhp, 1);
             }
             // cek apakah no hp karakter 1 adalah 0
             elseif(substr($nomorhp, 0, 1)=='0'){
-                $nomorhp= '+62'.substr($nomorhp, 1);
+                $nomorhp= trim($nomorhp);
             }
         }
         return $nomorhp;
     }
+}
+
+function checkNumberWa($number)
+{
+    $token = "SQPho4kHPKJfVPsgSGUXKujFJmC2dmjr7sijNsdh6x2EaBUhHY";
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://app.ruangwa.id/api/check_number',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => 'token='.$token.'&number='.$number,
+    ));
+
+    $response = curl_exec($curl);
+    $response = json_decode($response);
+
+    curl_close($curl);
+    return $response->onwhatsapp;
+
+}
+
+function sendwa($phone, $message)
+{
+    $token = "SQPho4kHPKJfVPsgSGUXKujFJmC2dmjr7sijNsdh6x2EaBUhHY";
+
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://app.ruangwa.id/api/send_message',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => 'token='.$token.'&number='.$phone.'&message='.$message,
+    ));
+
+    $response = curl_exec($curl);
+    $response = json_decode($response);
+
+    curl_close($curl);
+    return $response->status;
+
+    // {
+    //     "result": "true",
+    //     "id": "3EB0AD743D63",
+    //     "number": "087869415384",
+    //     "message": "Kirim pesan sukses!",
+    //     "status": "sent"
+    // }
 }

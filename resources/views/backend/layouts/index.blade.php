@@ -4,9 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>TW - @yield('title')</title>
     <link rel='shortcut icon' type='image/x-icon' href="{{ asset('images/tw-logo.png') }}" />
     <link rel="stylesheet" href="{{ asset('backend/assets/css/app.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/bundles/datatables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/components.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/custom.css') }}">
@@ -132,9 +135,43 @@
 
   <script src="{{ asset('backend/assets/js/app.min.js') }}"></script>
   <script src="{{ asset('backend/assets/bundles/apexcharts/apexcharts.min.js') }}"></script>
+  <script src="{{ asset('backend/assets/bundles/sweetalert/sweetalert.min.js') }}"></script>
+  <script src="{{ asset('backend/assets/bundles/datatables/datatables.min.js') }}"></script>
+  <script src="{{ asset('backend/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+  <script src="{{ asset('backend/assets/bundles/jquery-ui/jquery-ui.min.js') }}"></script>
   <script src="{{ asset('backend/assets/js/page/index.js') }}"></script>
   <script src="{{ asset('backend/assets/js/scripts.js') }}"></script>
   <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
+
+  @if($message = Session::get('success'))
+    <script>
+        swal({
+            icon: 'success',
+            title: '{{ $message }}',
+            showConfirmButton: false,
+            timer: 3000,
+            customClass: {
+                confirmButton: 'btn btn-primary'
+            },
+            buttonsStyling: false
+        });
+    </script>
+    @endif
+
+    @if($message = Session::get('error'))
+    <script>
+        swal({
+            icon: 'error',
+            title: '{{ $message }}',
+            showConfirmButton: false,
+            timer: 3000,
+            customClass: {
+                confirmButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
+    </script>
+    @endif
 
   @yield('js')
 

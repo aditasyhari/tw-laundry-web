@@ -20,18 +20,31 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         try {
+            $validator = Validator::make($request->all(), [
+                'nama' => 'required',
+                'email' => 'required|email|unique:users',
+                'alamat' => 'required',
+                'no_wa' => 'required|numeric|unique:users',
+                'password' => 'required|confirmed|min:8',
+            ]);
+                
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
+            }
+
             $newUser = User::create([
-                'name' => $request->name,
+                'nama' => $request->nama,
                 'email' => $request->email,
-                'address' => $request->address,
-                'no_telp' => $request->no_telp,
-                'password' => Hash::make('password'),
+                'alamat' => $request->alamat,
+                'no_wa' => $request->no_wa,
+                'password' => Hash::make($request->password),
             ]);
 
             Auth::login($newUser);
             return redirect()->intended('dashboard');
 
         } catch (Exception $e) {
+            return view('error');
             dd($e->getMessage());
         }
     }

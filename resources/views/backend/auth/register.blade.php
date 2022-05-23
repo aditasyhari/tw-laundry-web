@@ -17,35 +17,53 @@
                   @csrf
                   <div class="form-group">
                     <label for="frist_name">Nama</label>
-                    <input type="text" class="form-control" name="name" autofocus required>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="nama" value="{{ old('nama') }}" autofocus required>
+                    @error('nama')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                   </div>
                   <div class="row">
                     <div class="form-group col-6">
                       <label for="email">Email</label>
-                      <input id="email" type="email" class="form-control" name="email" required>
+                      <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required>
                       <div class="invalid-feedback"></div>
+                      @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
                     </div>
                     <div class="form-group col-6">
-                      <label for="last_name">No. Telp</label>
-                      <input type="number" class="form-control" name="no_telp" required>
+                      <label for="last_name">No. Whatsapp</label>
+                      <input type="number" class="form-control @error('no_wa') is-invalid @enderror" value="{{ old('no_wa') }}" name="no_wa" required>
+                      @error('no_wa')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="last_name">Alamat</label>
-                    <textarea name="address" class="form-control" required></textarea>
+                    <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" required>{{ old('alamat') }}</textarea>
+                    @error('alamat')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                   </div>
                   <div class="row">
                     <div class="form-group col-6">
                       <label for="password" class="d-block">Password</label>
-                      <input id="password" type="password" class="form-control pwstrength" data-indicator="pwindicator" name="password" required>
-                      <div id="pwindicator" class="pwindicator">
+                      <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+                      <!-- <div id="pwindicator" class="pwindicator">
                         <div class="bar"></div>
                         <div class="label"></div>
-                      </div>
+                      </div> -->
+                      @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
                     </div>
                     <div class="form-group col-6">
                       <label for="password2" class="d-block">Konfirmasi Password</label>
-                      <input id="password2" type="password" class="form-control" name="password_confirmation" required>
+                      <input id="password2" type="password" class="form-control @error('password') is-invalid @enderror" name="password_confirmation" required>
+                      @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
                     </div>
                   </div>
                   <div class="form-group">
