@@ -41,6 +41,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#order">Alur Pemesanan</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#payment">Pembayaran</a>
+                    </li>
                 </ul>
                 <span class="nav-item">
                     @if(Auth::user())
@@ -187,6 +190,28 @@
         </div>
     </div>
     <!-- end of order -->
+
+    <!-- payment -->
+    <div id="payment" class="form-1" style="margin-top: -170px">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="h2-heading"><span>Alur</span><br> Pembayaran</h2>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <img src="{{ asset('images/5.png') }}" class="img-fluid">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <img src="{{ asset('images/6.png') }}" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of payment -->
 
     <!-- Footer -->
     <div class="footer bg-gray">

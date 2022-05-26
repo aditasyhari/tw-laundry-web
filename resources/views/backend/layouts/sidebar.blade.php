@@ -10,6 +10,11 @@
             <li class="dropdown {{ (request()->is('dashboard*')) ? 'active' : '' }}">
                 <a href="{{ url('/dashboard') }}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
+            @if(Auth::user()->role == 'customer')
+            <li class="{{ (request()->is('tambah-pesanan*')) ? 'active' : '' }}">
+                <a class="nav-link" href="{{ url('tambah-pesanan') }}"><i data-feather="plus-circle"></i><span>Tambah Pesanan</span></a>
+            </li>
+            @endif
             <li class="{{ (request()->is('list-pesanan*')) ? 'active' : '' }}">
                 <a class="nav-link" href="{{ url('list-pesanan') }}"><i data-feather="list"></i><span>List Pesanan</span></a>
             </li>
