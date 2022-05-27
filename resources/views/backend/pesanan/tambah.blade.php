@@ -133,66 +133,30 @@ label {
                     <fieldset>
                         <h5>Paket Kiloan</h5>
                         <div class="row">
+                            @foreach($kiloan as $k)
                             <div class="col-6">
                                 <label>
-                                    <input type="radio" name="paket" class="card-input-element d-none" value="0" checked>
+                                    <input type="radio" name="paket" class="card-input-element d-none" value="{{ $k->id }}" {{ ($k->id == 1? 'checked' : '') }}>
                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                        Cuci Kering <b>Rp 2.500 / kg</b>
+                                        {{ $k->nama_paket }} <b>Rp {{ number_format($k->harga_paket, 0, ".", ".") }} / kg</b>
                                     </div>
                                 </label>
                             </div>
-                            <div class="col-6">
-                                <label>
-                                    <input type="radio" name="paket" class="card-input-element d-none" value="1">
-                                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                        Cuci Kering + Setrika <b>Rp 5000 / kg</b>
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="col-6">
-                                <label>
-                                    <input type="radio" name="paket" class="card-input-element d-none" value="2">
-                                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                        Setrika <b>Rp 3.500 / kg</b>
-                                    </div>
-                                </label>
-                            </div>
+                            @endforeach
                         </div>
 
                         <h5 class="mt-3">Paket Per Item</h5>
                         <div class="row">
+                            @foreach($item as $i)
                             <div class="col-6">
                                 <label>
-                                    <input type="radio" name="paket" class="card-input-element d-none" value="3">
+                                    <input type="radio" name="paket" class="card-input-element d-none" value="{{ $i->id }}">
                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                        Cuci Kering + Setrika Bedcover <b>Rp 16.000 / kg</b>
+                                        {{ $i->nama_paket }} <b>Rp {{ number_format($i->harga_paket, 0, ".", ".") }} / kg</b>
                                     </div>
                                 </label>
                             </div>
-                            <div class="col-6">
-                                <label>
-                                    <input type="radio" name="paket" class="card-input-element d-none" value="4">
-                                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                        Cuci Kering + Setrika Seprei <b>Rp 7.000 / kg</b>
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="col-6">
-                                <label>
-                                    <input type="radio" name="paket" class="card-input-element d-none" value="5">
-                                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                        Cuci Kering + Setrika Selimut <b>Rp 10.000 / kg</b>
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="col-6">
-                                <label>
-                                    <input type="radio" name="paket" class="card-input-element d-none" value="6">
-                                    <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                        Cuci Kering Boneka <b>Rp 10.000 / kg</b>
-                                    </div>
-                                </label>
-                            </div>
+                            @endforeach
                         </div>
                     </fieldset>
                     <h3>List Item</h3>
