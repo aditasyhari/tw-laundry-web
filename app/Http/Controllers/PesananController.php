@@ -7,13 +7,43 @@ use App\Models\User;
 use App\Models\JenisPaket;
 use App\Models\Pesanan;
 use App\Models\ListPesanan;
+use DataTables;
 use Exception;
 use Validator;
 use Auth;
 
 class PesananController extends Controller
 {
-    //
+    public function index()
+    {
+        try {
+            return view('backend.pesanan.index');
+        } catch (Exception $e) {
+            return view('error');
+        }
+    }
+
+    public function list(Request $request)
+    {
+        // if($request->ajax()) {
+            switch(Auth::user()->role) {
+                case 'admin':
+                    $data = Pesanan::orderBy('id', 'desc')->get();
+                    break;
+                case 'kurir':
+                    $data = Pesanan::where('id_kurir', Auth::user()->id)->orderBy('id', 'desc')->get();
+                    break;
+                case 'customer':
+                    $data = Pesanan::where('id_user', Auth::user()->id)->orderBy('id', 'desc')->get();
+                    break;
+            }
+
+            return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->make(true);
+        // }
+    }
+
     public function tambah()
     {
         try {
@@ -21,15 +51,6 @@ class PesananController extends Controller
             $item = JenisPaket::where('jenis_paket', 'item')->get();
 
             return view('backend.pesanan.tambah', compact(['kiloan', 'item']));
-        } catch (Exception $e) {
-            return view('error');
-        }
-    }
-
-    public function list()
-    {
-        try {
-            return view('backend.pesanan.index');
         } catch (Exception $e) {
             return view('error');
         }

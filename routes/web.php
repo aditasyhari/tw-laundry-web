@@ -50,14 +50,22 @@ Route::middleware(['auth'])->group(function() {
     Route::put('profile/ubah-password', [ProfileController::class, 'ubahPassword']);
 
 
-    Route::get('list-pesanan', [PesananController::class, 'list']);
+    Route::get('list-pesanan', [PesananController::class, 'index']);
+    Route::get('list-pesanan/list', [PesananController::class, 'list']);
+    Route::post('list-pesanan/list', [PesananController::class, 'list']);
     Route::get('tambah-pesanan', [PesananController::class, 'tambah']);
     Route::post('tambah-pesanan', [PesananController::class, 'simpan']);
+
     Route::get('laporan/keuangan', [LaporanController::class, 'keuangan']);
     Route::get('laporan/pesanan', [LaporanController::class, 'pesanan']);
 
     Route::middleware(['admin'])->group(function() {
         Route::get('user/customer', [UserController::class, 'customer']);
+        Route::post('user/customer', [UserController::class, 'tambahCustomer']);
+        Route::post('user/customer/list', [UserController::class, 'customerList']);
+        Route::put('user/customer/update/{id}', [UserController::class, 'updateCustomer']);
+        Route::delete('user/customer/delete/{id}', [UserController::class, 'hapusCustomer']);
+
         Route::get('user/kurir', [UserController::class, 'kurir']);
         Route::post('user/kurir', [UserController::class, 'tambahKurir']);
         Route::post('user/kurir/list', [UserController::class, 'kurirList']);

@@ -27,10 +27,10 @@
                 </ul>
             </li>
             <li class="menu-header">Data User</li>
-            <li class="{ (request()->is('user/kurir*')) ? 'active' : '' }}">
+            <li class="{{ (request()->is('user/kurir*')) ? 'active' : '' }}">
                 <a class="nav-link" href="{{ url('user/kurir') }}"><i data-feather="user"></i><span>Kurir</span></a>
             </li>
-            <li class="{ (request()->is('user/customer*')) ? 'active' : '' }}">
+            <li class="{{ (request()->is('user/customer*')) ? 'active' : '' }}">
                 <a class="nav-link" href="{{ url('user/customer') }}"><i data-feather="users"></i><span>Customer</span></a>
             </li>
             @endif

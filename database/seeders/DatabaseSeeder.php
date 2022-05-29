@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\JenisPaket;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class DatabaseSeeder extends Seeder
             'alamat' => 'Rogojampi',
             'email' => 'novitamubin1999@gmail.com',
             'email_verified_at' => date("Y-m-d H:i:s"),
-            'password' => 'password',
+            'password' => Hash::make('password'),
             'role' => 'admin',
             'no_wa' => '088996943204',
             'wa_verified_at' => date("Y-m-d H:i:s"),
