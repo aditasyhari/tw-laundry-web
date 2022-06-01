@@ -96,6 +96,14 @@
           }
         },
         {
+          targets: 10,
+          orderable: false,
+          render: function (data, type, full, meta) {
+            var status_cucian = full['status_cucian'];
+            return '<span class="text-uppercase">'+status_cucian+'</span>'
+          }
+        },
+        {
           targets: -1,
           orderable: false,
           render: function (data, type, full, meta) {

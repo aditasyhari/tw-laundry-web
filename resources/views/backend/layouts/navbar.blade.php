@@ -14,7 +14,7 @@
         </ul>
     </div>
     <ul class="navbar-nav navbar-right">
-        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+        <!-- <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
             class="nav-link notification-toggle nav-link-lg"><i data-feather="bell" class="bell"></i>
         </a>
         <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
@@ -57,7 +57,7 @@
             <a href="#">View All <i class="fas fa-chevron-right"></i></a>
             </div>
         </div>
-        </li>
+        </li> -->
         <li class="dropdown">
             <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                 <img alt="image" src="{{ asset('images/default.jpg') }}" class="user-img-radious-style">

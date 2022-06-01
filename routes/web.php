@@ -52,7 +52,16 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('list-pesanan', [PesananController::class, 'index']);
     Route::get('list-pesanan/list', [PesananController::class, 'list']);
+    Route::get('list-pesanan/detail/{id}', [PesananController::class, 'detail']);
     Route::post('list-pesanan/list', [PesananController::class, 'list']);
+    Route::post('list-pesanan/detail/validasi/{id}', [PesananController::class, 'validasi']);
+    Route::post('list-pesanan/detail/order-selesai/{id}', [PesananController::class, 'selesai']);
+    Route::post('list-pesanan/detail/send-notif/{id}', [PesananController::class, 'sendNotif']);
+    Route::post('list-pesanan/detail/bayar-cod/{id}', [PesananController::class, 'bayarCod']);
+    Route::post('list-pesanan/detail/upload-bukti/{id}', [PesananController::class, 'uploadBukti']);
+    Route::post('list-pesanan/detail/tolak-bukti/{id}', [PesananController::class, 'tolakBukti']);
+    Route::post('list-pesanan/detail/terima-bukti/{id}', [PesananController::class, 'terimaBukti']);
+
     Route::get('tambah-pesanan', [PesananController::class, 'tambah']);
     Route::post('tambah-pesanan', [PesananController::class, 'simpan']);
 
@@ -71,6 +80,8 @@ Route::middleware(['auth'])->group(function() {
         Route::post('user/kurir/list', [UserController::class, 'kurirList']);
         Route::put('user/kurir/update/{id}', [UserController::class, 'updateKurir']);
         Route::delete('user/kurir/delete/{id}', [UserController::class, 'hapusKurir']);
+
+
     });
 
     Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {

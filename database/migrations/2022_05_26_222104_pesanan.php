@@ -29,10 +29,12 @@ class Pesanan extends Migration
             $table->enum('antar', ['sendiri', 'kurir'])->default('sendiri');
             $table->enum('ambil', ['sendiri', 'kurir'])->default('sendiri');
             $table->enum('pembayaran', ['dana', 'cod'])->default('dana');
-            $table->enum('status_cucian', ['menunggu', 'validasi', 'proses', 'selesai'])->default('menunggu');
+            $table->enum('status_cucian', ['menunggu', 'proses', 'selesai'])->default('menunggu');
             $table->enum('status_diambil', ['belum', 'sudah'])->default('belum');
+            $table->enum('status_bayar', ['belum', 'sudah'])->default('belum');
+            $table->string('bukti_bayar')->nullable();
             $table->double('total_kg')->nullable();
-            $table->double('total_pembayaran')->nullable();
+            $table->integer('total_pembayaran')->nullable();
             $table->timestamps();
         });
     }
