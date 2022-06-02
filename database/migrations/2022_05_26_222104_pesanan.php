@@ -17,7 +17,7 @@ class Pesanan extends Migration
             $table->id();
             $table->integer('id_transaksi');
             $table->foreignId('id_user')->references('id')->on('users');
-            $table->foreignId('id_kurir')->references('id')->on('users')->nullable();
+            $table->integer('id_kurir')->nullable();
             $table->foreignId('id_paket')->references('id')->on('jenis_paket');
             $table->string('nama');
             $table->string('email');

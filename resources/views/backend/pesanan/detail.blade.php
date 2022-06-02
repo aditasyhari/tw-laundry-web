@@ -187,7 +187,7 @@
                                 @if($pesanan->status_cucian == 'menunggu')
                                     Rp -
                                 @else
-                                    Rp {{ $pesanan->total_pembayaran }}
+                                    Rp {{ number_format($pesanan->total_pembayaran, 0, ".", ".") }}
                                 @endif
                             </h3>
                         </div>
@@ -277,9 +277,11 @@
                             @endif
                         @else
                             <h5><b>Pembayaran sudah divalidasi. Transaksi Selesai.</b></h5>
-                            <h6>
-                                <a href="{{ url('/storage/images/bukti-tf/'.$pesanan->bukti_bayar) }}" class="mt-3" target="_blank">Lihat Bukti Pembayaran</a>
-                            </h6>
+                            @if($pesanan->pembayaran == 'dana')
+                                <h6>
+                                    <a href="{{ url('/storage/images/bukti-tf/'.$pesanan->bukti_bayar) }}" class="mt-3" target="_blank">Lihat Bukti Pembayaran</a>
+                                </h6>
+                            @endif
                         @endif
                         @break
                     @case('admin')

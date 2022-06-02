@@ -101,7 +101,11 @@ class PesananController extends Controller
                 $id_transaksi = $start_transaksi + 1;
             }
 
-            $id_kurir = User::select('id')->where('role', 'kurir')->inRandomOrder()->pluck('id')->first();
+            if($request->antar == 'kurir' || $request->ambil == 'kurir') {
+                $id_kurir = User::select('id')->where('role', 'kurir')->inRandomOrder()->pluck('id')->first();
+            } else {
+                $id_kurir = null;
+            }
 
             $pesanan = Pesanan::create([
                 'id_transaksi' => $id_transaksi,
@@ -136,11 +140,8 @@ class PesananController extends Controller
             if($request->antar == 'kurir') {
                 try {
                     $kurir = User::find($id_kurir);
-                    $check_wa = checkNumberWa($kurir->no_wa);
-                    if($check_wa == 'true') {
-                        $pesan = "TW Laundry - Ada pesanan baru yang harus diambil. Cek website sekarang!";
-                        sendwa($kurir->no_wa, $pesan);
-                    }
+                    $pesan = "TW Laundry - Ada pesanan baru yang harus diambil. Cek website sekarang!";
+                    sendwa($kurir->no_wa, $pesan);
                 } catch (Exception $error) {
     
                 }
