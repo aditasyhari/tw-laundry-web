@@ -65,9 +65,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('tambah-pesanan', [PesananController::class, 'tambah']);
     Route::post('tambah-pesanan', [PesananController::class, 'simpan']);
 
-    Route::get('laporan/keuangan', [LaporanController::class, 'keuangan']);
-    Route::get('laporan/pesanan', [LaporanController::class, 'pesanan']);
-
+    
     Route::middleware(['admin'])->group(function() {
         Route::get('user/customer', [UserController::class, 'customer']);
         Route::post('user/customer', [UserController::class, 'tambahCustomer']);
@@ -80,8 +78,12 @@ Route::middleware(['auth'])->group(function() {
         Route::post('user/kurir/list', [UserController::class, 'kurirList']);
         Route::put('user/kurir/update/{id}', [UserController::class, 'updateKurir']);
         Route::delete('user/kurir/delete/{id}', [UserController::class, 'hapusKurir']);
-
-
+        
+        Route::get('laporan/keuangan', [LaporanController::class, 'keuangan']);
+        Route::post('laporan/keuangan', [LaporanController::class, 'keuangan']);
+        Route::get('laporan/pesanan', [LaporanController::class, 'pesanan']);
+        Route::post('laporan/pesanan', [LaporanController::class, 'pesanan']);
+        
     });
 
     Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
