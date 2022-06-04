@@ -14,9 +14,69 @@ use DateTime;
 class LaporanController extends Controller
 {
     //
-    public function keuangan()
+    public function keuangan(Request $request)
     {
-        return view('backend.laporan.keuangan');
+        try {
+            $method = $request->method();
+            if($method == 'GET') {
+                $paket = DB::table('jenis_paket as jp')->select(
+                    'jp.nama_paket',
+                    DB::raw("(SELECT SUM(total_pembayaran) FROM pesanan as p WHERE p.id_paket = jp.id AND MONTH(created_at) = MONTH(now()) AND YEAR(created_at) = YEAR(now())) AS total")
+                )
+                ->get();
+
+                $date = Carbon::now();
+                $bulan = $date->format('F');
+                $tahun = $date->format('Y');
+                $nama_paket = [];
+                $total = [];
+                foreach($paket as $p) {
+                    array_push($nama_paket, $p->nama_paket);
+                    if($p->total == null) {
+                        array_push($total, 0);
+                    } else {
+                        array_push($total, intval($p->total));
+                    }
+                }
+
+                return view('backend.laporan.keuangan', compact(['nama_paket', 'total', 'bulan', 'tahun']));        
+            } else {
+                $validator = Validator::make($request->all(), [
+                    'bulan' => 'required',
+                    'tahun' => 'required',
+                ]);
+                    
+                if ($validator->fails()) {
+                    return back()->with('error', 'Pastikan bulan dan tahun dipilih!');
+                }
+
+                $paket = DB::table('jenis_paket as jp')->select(
+                    'jp.nama_paket',
+                    DB::raw("(SELECT SUM(total_pembayaran) FROM pesanan as p WHERE p.id_paket = jp.id AND MONTH(created_at) = $request->bulan AND YEAR(created_at) = $request->tahun) AS total")
+                )
+                ->get();
+
+                $nomor_bulan  = intval($request->bulan);
+                $dateObj   = DateTime::createFromFormat('!m', $nomor_bulan);
+                $bulan = $dateObj->format('F');
+                $tahun = $request->tahun;
+                $nama_paket = [];
+                $total = [];
+                foreach($paket as $p) {
+                    array_push($nama_paket, $p->nama_paket);
+                    if($p->total == null) {
+                        array_push($total, 0);
+                    } else {
+                        array_push($total, intval($p->total));
+                    }
+                }
+
+                return view('backend.laporan.keuangan', compact(['nama_paket', 'total', 'bulan', 'tahun']));        
+            }
+        } catch (Exception $e) {
+            dd($e->getMessage());
+            return view('error');
+        }
     }
 
     public function pesanan(Request $request)
@@ -70,7 +130,7 @@ class LaporanController extends Controller
 
                 return view('backend.laporan.pesanan', compact(['nama_paket', 'total', 'bulan', 'tahun']));
             }
-        } catch (Exception $e) {\
+        } catch (Exception $e) {
             dd($e->getMessage());
             return view('error');
         }

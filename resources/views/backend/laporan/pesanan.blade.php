@@ -151,13 +151,13 @@
         },
         yaxis: {
             axisBorder: {
-                show: false
+                show: true
             },
             axisTicks: {
-                show: false,
+                show: true,
             },
             labels: {
-                show: false,
+                show: true,
                 formatter: function (val) {
                     return val + " order";
                 }
