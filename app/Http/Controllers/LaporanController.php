@@ -26,7 +26,7 @@ class LaporanController extends Controller
                 ->get();
 
                 $date = Carbon::now();
-                $bulan = $date->format('F');
+                $bulan = $date->translatedFormat('F');
                 $tahun = $date->format('Y');
                 $nama_paket = [];
                 $total = [];
@@ -39,39 +39,43 @@ class LaporanController extends Controller
                     }
                 }
 
-                return view('backend.laporan.keuangan', compact(['nama_paket', 'total', 'bulan', 'tahun']));        
+                $jumlah = array_sum($total);
+
+                return view('backend.laporan.keuangan', compact(['nama_paket', 'total', 'bulan', 'tahun', 'jumlah']));        
             } else {
                 $validator = Validator::make($request->all(), [
-                    'bulan' => 'required',
-                    'tahun' => 'required',
+                    'dari' => 'required',
+                    'sampai' => 'required',
                 ]);
                     
                 if ($validator->fails()) {
-                    return back()->with('error', 'Pastikan bulan dan tahun dipilih!');
+                    return back()->with('error', 'Pastikan tanggal dipilih dengan benar!');
                 }
 
-                $paket = DB::table('jenis_paket as jp')->select(
-                    'jp.nama_paket',
-                    DB::raw("(SELECT SUM(total_pembayaran) FROM pesanan as p WHERE p.id_paket = jp.id AND MONTH(created_at) = $request->bulan AND YEAR(created_at) = $request->tahun) AS total")
-                )
-                ->get();
-
-                $nomor_bulan  = intval($request->bulan);
-                $dateObj   = DateTime::createFromFormat('!m', $nomor_bulan);
-                $bulan = $dateObj->format('F');
-                $tahun = $request->tahun;
+                $dari = Carbon::parse($request->dari)->translatedFormat('d F Y');
+                $sampai = Carbon::parse($request->sampai)->translatedFormat('d F Y');
                 $nama_paket = [];
                 $total = [];
+
+                $paket = JenisPaket::select('id', 'nama_paket')->get();
+                
                 foreach($paket as $p) {
                     array_push($nama_paket, $p->nama_paket);
-                    if($p->total == null) {
+                    $total_uang = Pesanan::where('id_paket', $p->id)
+                                    ->whereDate('created_at', '>=', $request->dari)
+                                    ->whereDate('created_at', '<=', $request->sampai)
+                                    ->sum('total_pembayaran');
+
+                    if($total_uang == null) {
                         array_push($total, 0);
                     } else {
-                        array_push($total, intval($p->total));
+                        array_push($total, intval($total_uang));
                     }
                 }
 
-                return view('backend.laporan.keuangan', compact(['nama_paket', 'total', 'bulan', 'tahun']));        
+                $jumlah = array_sum($total);
+
+                return view('backend.laporan.keuangan', compact(['nama_paket', 'total', 'dari', 'sampai', 'jumlah']));        
             }
         } catch (Exception $e) {
             dd($e->getMessage());
@@ -91,7 +95,7 @@ class LaporanController extends Controller
                 ->get();
 
                 $date = Carbon::now();
-                $bulan = $date->format('F');
+                $bulan = $date->translatedFormat('F');
                 $tahun = $date->format('Y');
                 $nama_paket = [];
                 $total = [];
@@ -100,35 +104,43 @@ class LaporanController extends Controller
                     array_push($total, $p->total);
                 }
 
-                return view('backend.laporan.pesanan', compact(['nama_paket', 'total', 'bulan', 'tahun']));
+                $jumlah = array_sum($total);
+
+                return view('backend.laporan.pesanan', compact(['nama_paket', 'total', 'bulan', 'tahun', 'jumlah']));
             } else {
                 $validator = Validator::make($request->all(), [
-                    'bulan' => 'required',
-                    'tahun' => 'required',
+                    'dari' => 'required',
+                    'sampai' => 'required',
                 ]);
                     
                 if ($validator->fails()) {
-                    return back()->with('error', 'Pastikan bulan dan tahun dipilih!');
+                    return back()->with('error', 'Pastikan tanggal dipilih dengan benar!');
                 }
 
-                $paket = DB::table('jenis_paket as jp')->select(
-                    'jp.nama_paket',
-                    DB::raw("(SELECT COUNT(*) FROM pesanan as p WHERE p.id_paket = jp.id AND MONTH(created_at) = $request->bulan AND YEAR(created_at) = $request->tahun) AS total")
-                )
-                ->get();
-
-                $nomor_bulan  = intval($request->bulan);
-                $dateObj   = DateTime::createFromFormat('!m', $nomor_bulan);
-                $bulan = $dateObj->format('F');
-                $tahun = $request->tahun;
+                $dari = Carbon::parse($request->dari)->translatedFormat('d F Y');
+                $sampai = Carbon::parse($request->sampai)->translatedFormat('d F Y');
                 $nama_paket = [];
                 $total = [];
+
+                $paket = JenisPaket::select('id', 'nama_paket')->get();
+                
                 foreach($paket as $p) {
                     array_push($nama_paket, $p->nama_paket);
-                    array_push($total, $p->total);
+                    $total_order = Pesanan::where('id_paket', $p->id)
+                                    ->whereDate('created_at', '>=', $request->dari)
+                                    ->whereDate('created_at', '<=', $request->sampai)
+                                    ->count();
+
+                    if($total_order == null) {
+                        array_push($total, 0);
+                    } else {
+                        array_push($total, intval($total_order));
+                    }
                 }
 
-                return view('backend.laporan.pesanan', compact(['nama_paket', 'total', 'bulan', 'tahun']));
+                $jumlah = array_sum($total);
+
+                return view('backend.laporan.pesanan', compact(['nama_paket', 'total', 'dari', 'sampai', 'jumlah']));
             }
         } catch (Exception $e) {
             dd($e->getMessage());

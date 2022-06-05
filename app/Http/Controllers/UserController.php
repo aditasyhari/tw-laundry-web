@@ -4,16 +4,97 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Pesanan;
 use DataTables;
 use Validator;
 use Exception;
+use Auth;
+use DB;
 
 class UserController extends Controller
 {
     //
+    public function dashboard()
+    {
+        try {
+            switch(Auth::user()->role) {
+                case 'customer':
+                    $id_user = Auth::user()->id;
+                    $paket = DB::table('jenis_paket as jp')->select(
+                        'jp.nama_paket',
+                        DB::raw("(SELECT COUNT(*) FROM pesanan as p WHERE p.id_paket = jp.id AND p.id_user = $id_user AND MONTH(created_at) = MONTH(now()) AND YEAR(created_at) = YEAR(now())) AS total")
+                    )
+                    ->get();
+                    $totalBulan = Pesanan::where('id_user', $id_user)->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->count();
+                    $totalSemua = Pesanan::where('id_user', $id_user)->count();
+    
+                    $nama_paket = [];
+                    $total = [];
+                    foreach($paket as $p) {
+                        array_push($nama_paket, $p->nama_paket);
+                        if($p->total == null) {
+                            array_push($total, 0);
+                        } else {
+                            array_push($total, intval($p->total));
+                        }
+                    }
+
+                    $data = [
+                        'nama_paket' => $nama_paket,
+                        'total' => $total,
+                        'total_bulan' => $totalBulan,
+                        'total_semua' => $totalSemua
+                    ];
+                    break;
+                case 'admin':
+                    $paket = DB::table('jenis_paket as jp')->select(
+                        'jp.nama_paket',
+                        DB::raw("(SELECT COUNT(*) FROM pesanan as p WHERE p.id_paket = jp.id AND MONTH(created_at) = MONTH(now()) AND YEAR(created_at) = YEAR(now())) AS total")
+                    )
+                    ->get();
+                    $totalPesananBulan = Pesanan::whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->count();
+                    $totalPendapatanBulan = Pesanan::whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->sum('total_pembayaran');
+                    $totalPesananSemua = Pesanan::count();
+                    $totalPelanggan = User::where('role', 'customer')->count();
+    
+                    $nama_paket = [];
+                    $total = [];
+                    foreach($paket as $p) {
+                        array_push($nama_paket, $p->nama_paket);
+                        if($p->total == null) {
+                            array_push($total, 0);
+                        } else {
+                            array_push($total, intval($p->total));
+                        }
+                    }
+
+                    $data = [
+                        'nama_paket' => $nama_paket,
+                        'total' => $total,
+                        'total_pesanan_bulan' => $totalPesananBulan,
+                        'total_pesanan_semua' => $totalPesananSemua,
+                        'total_pendapatan_bulan' => $totalPendapatanBulan,
+                        'total_pelanggan' => $totalPelanggan,
+                    ];
+                    break;
+                case 'kurir':
+                    $data = '';
+                    break;
+            }
+
+            return view('backend.dashboard', compact(['data']));
+        } catch (Exception $e) {
+            return view('error');
+        }
+    }
+
     public function customer()
     {
-        return view('backend.user.customer');
+        try {
+            return view('backend.user.customer');
+        } catch (Exception $e) {
+            return view('error');
+        }
     }
 
     public function customerList(Request $request)

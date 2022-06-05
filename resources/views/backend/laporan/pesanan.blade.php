@@ -13,30 +13,23 @@
                 <form action="" method="post">
                     @csrf
                     <div class="row">
-                        <div class="col">
-                            <select name="bulan" id="bulan" class="form-control" required>
-                                <option disabled selected>Pilih Bulan</option>
-                                <option value="01">Januari</option>
-                                <option value="02">Februari</option>
-                                <option value="03">Maret</option>
-                                <option value="04">April</option>
-                                <option value="05">Mei</option>
-                                <option value="06">Juni</option>
-                                <option value="07">Juli</option>
-                                <option value="08">Agustus</option>
-                                <option value="09">September</option>
-                                <option value="10">Oktober</option>
-                                <option value="11">November</option>
-                                <option value="12">Desember</option>
-                            </select>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                               <label for="">Dari Tanggal</label>
+                               <input type="date" name="dari" class="form-control" required>
+                            </div>
                         </div>
-                        <div class="col">
-                            <select name="tahun" id="tahun" class="form-control" required>
-                                <option disabled selected>Pilih Tahun</option>
-                            </select>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                               <label for="">Sampai Tanggal</label>
+                               <input type="date" name="sampai" class="form-control" required>
+                            </div>
                         </div>
+                     
+                    </div>
+                    <div class="row">
                         <div class="col">
-                            <button type="submit" class="btn btn-primary">Tampilkan</button>
+                            <button type="submit" class="btn btn-primary d-inline">Tampilkan</button>
                         </div>
                     </div>
                 </form>
@@ -49,7 +42,13 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-            <h4>{{ $bulan }} {{ $tahun }}</h4>
+            <h4>
+                @if(empty($dari))
+                    {{ $bulan }} {{ $tahun }} ({{ number_format($jumlah, 0, ".", ".") }} Pesanan)
+                @else
+                    {{ $dari }} - {{ $sampai }} ({{ number_format($jumlah, 0, ".", ".") }} Pesanan)
+                @endif
+            </h4>
             </div>
             <div class="card-body">
                 <div class="recent-report__chart">
@@ -65,15 +64,6 @@
 
 @section('js')
 <script>
-    // get previous year
-    const date = new Date();
-    var year = date.getFullYear();
-
-    for(var i = 0; i < 3; i++) {
-        var old_year = year-i;
-        $('#tahun').append(`<option value="${old_year}">${old_year}</option>`);
-    }
-    
     // chart
     var total = <?= json_encode($total); ?>;
     var nama_paket = <?= json_encode($nama_paket); ?>;

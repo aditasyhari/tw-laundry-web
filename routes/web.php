@@ -45,6 +45,8 @@ Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'register']);
 
 Route::middleware(['auth'])->group(function() {
+    Route::get('dashboard', [UserController::class, 'dashboard']);
+
     Route::get('profile', [ProfileController::class, 'index']);
     Route::put('profile/ubah', [ProfileController::class, 'ubahProfile']);
     Route::put('profile/ubah-password', [ProfileController::class, 'ubahPassword']);
@@ -98,7 +100,3 @@ Route::middleware(['auth'])->group(function() {
         return back()->with('success', 'Link verifikasi sudah terkirim! Cek email anda.');
     })->middleware('throttle:6,1')->name('verification.send');
 });
-
-Route::middleware(['auth:sanctum'])->get('/dashboard', function () {
-    return view('backend.dashboard');
-})->name('dashboard');
