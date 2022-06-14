@@ -284,47 +284,47 @@
                             @endif
                         @endif
                         @break
-                    @case('admin')
-                        @if($pesanan->status_bayar == 'belum')
-                            @if($pesanan->pembayaran == 'dana')
-                                @if($pesanan->bukti_bayar != null)
-                                    <h4>Validasi Bukti Bayar</h4>
+                    @default
+                        @if(Auth::user()->role == 'admin' || Auth::user()->id == $pesanan->id_kurir)
+                            @if($pesanan->status_bayar == 'belum')
+                                @if($pesanan->pembayaran == 'dana')
+                                    @if($pesanan->bukti_bayar != null)
+                                        <h4>Validasi Bukti Bayar</h4>
+                                        <h6>
+                                            <a href="{{ url('/storage/images/bukti-tf/'.$pesanan->bukti_bayar) }}" class="mt-3" target="_blank">Lihat Bukti Pembayaran</a>
+                                        </h6>
+                                        <div class="form-group d-flex flex-row mt-3">
+                                            <form action="{{ url('/list-pesanan/detail/terima-bukti/'.$pesanan->id) }}" method="post" class="mr-2">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary">Validasi</button>
+                                            </form>
+                                            <form action="{{ url('/list-pesanan/detail/tolak-bukti/'.$pesanan->id) }}" method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger">Tolak</button>
+                                            </form>
+                                        </div>
+                                    @else
+                                        <h5><b>- Validasi Cucian</b></h5>
+                                        <h5><b>- Tunggu Pelanggan Upload Bukti Pembayaran</b></h5>
+                                    @endif
+                                @else
+                                    <h5><b>Pembayaran dilakukan dengan COD</b></h5>
+                                    @if($pesanan->status_bayar == 'belum' && $pesanan->status_cucian != 'menunggu')
+                                        <form action="{{ url('/list-pesanan/detail/bayar-cod/'.$pesanan->id) }}" method="post" class="mt-3">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary">Validasi Pembayaran</button>
+                                        </form>
+                                    @endif
+                                @endif
+                            @else
+                                <h5><b>Transaksi Selesai</b></h5>
+                                @if($pesanan->pembayaran == 'dana')
                                     <h6>
                                         <a href="{{ url('/storage/images/bukti-tf/'.$pesanan->bukti_bayar) }}" class="mt-3" target="_blank">Lihat Bukti Pembayaran</a>
                                     </h6>
-                                    <div class="form-group d-flex flex-row mt-3">
-                                        <form action="{{ url('/list-pesanan/detail/terima-bukti/'.$pesanan->id) }}" method="post" class="mr-2">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary">Validasi</button>
-                                        </form>
-                                        <form action="{{ url('/list-pesanan/detail/tolak-bukti/'.$pesanan->id) }}" method="post">
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger">Tolak</button>
-                                        </form>
-                                    </div>
-                                @else
-                                    <h5><b>- Validasi Cucian</b></h5>
-                                    <h5><b>- Tunggu Pelanggan Upload Bukti Pembayaran</b></h5>
                                 @endif
-                            @else
-                                <h5><b>Pembayaran dilakukan dengan COD</b></h5>
-                                @if($pesanan->status_bayar == 'belum' && $pesanan->status_cucian != 'menunggu')
-                                    <form action="{{ url('/list-pesanan/detail/bayar-cod/'.$pesanan->id) }}" method="post" class="mt-3">
-                                        @csrf
-                                        <button type="submit" class="btn btn-primary">Validasi Pembayaran</button>
-                                    </form>
-                                @endif
-                            @endif
-                        @else
-                            <h5><b>Transaksi Selesai</b></h5>
-                            @if($pesanan->pembayaran == 'dana')
-                                <h6>
-                                    <a href="{{ url('/storage/images/bukti-tf/'.$pesanan->bukti_bayar) }}" class="mt-3" target="_blank">Lihat Bukti Pembayaran</a>
-                                </h6>
                             @endif
                         @endif
-                        @break
-                    @default
                         @break
                 @endswitch
             </div>

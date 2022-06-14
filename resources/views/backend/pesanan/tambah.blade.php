@@ -191,13 +191,13 @@ label {
                     </fieldset>
                     <h3>Antar / Ambil</h3>
                     <fieldset>
-                        <h5>Antar Cucian</h5>
+                        <h5>Diambil Kurir/Diantar Sendiri Cucian yang akan di proses ke Laundry</h5>
                         <div class="row">
                             <div class="col-6">
                                 <label>
                                     <input type="radio" name="antar" class="card-input-element d-none" value="sendiri" checked>
                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                        Diantar Sendiri
+                                        Sendiri
                                     </div>
                                 </label>
                             </div>
@@ -205,19 +205,19 @@ label {
                                 <label>
                                     <input type="radio" name="antar" class="card-input-element d-none" value="kurir">
                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                        Dianterin Kurir TW Laundry
+                                        Kurir TW Laundry
                                     </div>
                                 </label>
                             </div>
                         </div>
 
-                        <h5 class="mt-3">Ambil Cucian</h5>
+                        <h5 class="mt-3">Antar Kurir/Jemput Sendiri Cucian Selesai Proses di Laundry</h5>
                         <div class="row">
                             <div class="col-6">
                                 <label>
                                     <input type="radio" name="ambil" class="card-input-element d-none" value="sendiri" checked>
                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                        Diambil Sendiri
+                                        Sendiri
                                     </div>
                                 </label>
                             </div>
@@ -225,7 +225,7 @@ label {
                                 <label>
                                     <input type="radio" name="ambil" class="card-input-element d-none" value="kurir">
                                     <div class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
-                                        Diambilin Kurir TW Laundry
+                                        Kurir TW Laundry
                                     </div>
                                 </label>
                             </div>

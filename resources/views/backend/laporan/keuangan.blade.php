@@ -1,9 +1,9 @@
 @extends('backend.layouts.index')
 
-@section('title') Laporan Pesanan @endsection
+@section('title') Laporan PENJUALAN @endsection
 
 @section('content')
-<h4>LAPORAN KEUANGAN</h4>
+<h4>LAPORAN PENJUALAN</h4>
 <hr>
 
 <div class="row mt-4">
@@ -42,7 +42,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-            <h4>
+            <h4 id="tgl-penjualan">
                 @if(empty($dari))
                     {{ $bulan }} {{ $tahun }} (Rp {{ number_format($jumlah, 0, ".", ".") }})
                 @else
@@ -59,10 +59,10 @@
     </div>
 </div>
 
-
 @endsection
 
 @section('js')
+<script src="{{ asset('backend/assets/jsPDF/dist/jspdf.debug.js') }}" type='text/javascript'></script>
 <script>
     // format rupiah
     var formatRupiah = function(num){
@@ -89,7 +89,6 @@
     // chart
     var total = <?= json_encode($total); ?>;
     var nama_paket = <?= json_encode($nama_paket); ?>;
-    console.log(total);
     var options2 = {
         chart: {
             height: 350,
@@ -179,7 +178,7 @@
 
         },
         title: {
-            text: 'Per Bulan',
+            text: 'Penjualan',
             floating: true,
             offsetY: 320,
             align: 'center',
@@ -195,6 +194,19 @@
     );
 
     report2.render();
+
+    $("div.apexcharts-menu").append("<div class='apexcharts-menu-item exportPDF' title='Download PDF' onclick='downloadPDF()' >Download PDF</div>");
+
+    function downloadPDF() {
+        report2.dataURI().then((uri) => {
+            // let pdf = new jsPDF();
+            let pdf = new jsPDF('l', 'mm', [450, 120], false);
+
+            pdf.text(10, 10, $("#tgl-penjualan").html());
+            pdf.addImage(uri, 'JPEG', 10, 20);
+            pdf.save("laporan-penjualan.pdf");
+        });
+    }
     // end chart
 </script>
 @endsection

@@ -42,7 +42,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-            <h4>
+            <h4 id="tgl-penjualan">
                 @if(empty($dari))
                     {{ $bulan }} {{ $tahun }} ({{ number_format($jumlah, 0, ".", ".") }} Pesanan)
                 @else
@@ -63,6 +63,7 @@
 @endsection
 
 @section('js')
+<script src="{{ asset('backend/assets/jsPDF/dist/jspdf.debug.js') }}" type='text/javascript'></script>
 <script>
     // chart
     var total = <?= json_encode($total); ?>;
@@ -155,7 +156,7 @@
 
         },
         title: {
-            text: 'Per Bulan',
+            text: 'Pesanan',
             floating: true,
             offsetY: 320,
             align: 'center',
@@ -171,6 +172,19 @@
     );
 
     report.render();
+
+    $("div.apexcharts-menu").append("<div class='apexcharts-menu-item exportPDF' title='Download PDF' onclick='downloadPDF()' >Download PDF</div>");
+
+    function downloadPDF() {
+        report.dataURI().then((uri) => {
+            // let pdf = new jsPDF();
+            let pdf = new jsPDF('l', 'mm', [450, 120], false);
+
+            pdf.text(10, 10, $("#tgl-penjualan").html());
+            pdf.addImage(uri, 'JPEG', 10, 20);
+            pdf.save("laporan-penjualan.pdf");
+        });
+    }
     // end chart
 </script>
 @endsection

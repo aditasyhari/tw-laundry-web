@@ -196,6 +196,7 @@
 @endsection
 
 @section('js')
+<script src="{{ asset('backend/assets/jsPDF/dist/jspdf.debug.js') }}" type='text/javascript'></script>
 @switch(Auth::user()->role)
     @case('customer')
         <script>
@@ -422,4 +423,21 @@
     @case('kurir')
         @break
 @endswitch
+<script>
+    const Xmas95 = new Date();
+    const options = { month: 'long'};
+    let bulan = new Intl.DateTimeFormat('id-ID', options).format(Xmas95);
+    $("div.apexcharts-menu").append("<div class='apexcharts-menu-item exportPDF' title='Download PDF' onclick='downloadPDF()' >Download PDF</div>");
+
+    function downloadPDF() {
+        reportMonth.dataURI().then((uri) => {
+            // let pdf = new jsPDF();
+            let pdf = new jsPDF('l', 'mm', [450, 120], false);
+
+            pdf.text(10, 10, 'Pesanan Bulan '+bulan);
+            pdf.addImage(uri, 'JPEG', 10, 20);
+            pdf.save("laporan-penjualan.pdf");
+        });
+    }
+</script>
 @endsection

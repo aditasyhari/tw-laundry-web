@@ -22,7 +22,7 @@
             <li class="dropdown {{ (request()->is('laporan*')) ? 'active' : '' }}">
                 <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="file"></i><span>Laporan</span></a>
                 <ul class="dropdown-menu">
-                <li><a class="nav-link" href="{{ url('laporan/keuangan') }}">Keuangan</a></li>
+                <li><a class="nav-link" href="{{ url('laporan/keuangan') }}">Penjualan</a></li>
                 <li><a class="nav-link" href="{{ url('laporan/pesanan') }}">Pesanan</a></li>
                 </ul>
             </li>
