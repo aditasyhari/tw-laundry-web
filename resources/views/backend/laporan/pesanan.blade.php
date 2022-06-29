@@ -59,10 +59,63 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 id="tgl-penjualan">
+                    @if(empty($dari))
+                        {{ $bulan }} {{ $tahun }} ({{ $jumlah }} Pesanan)
+                    @else
+                        {{ $dari }} - {{ $sampai }} ({{ $jumlah }} Pesanan)
+                    @endif
+                </h4>
+            </div>
+            <div class="ml-3" id="export"></div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="table-1">
+                        <thead>
+                            <tr>
+                                <th>ID transaksi</th>
+                                <th>Nama</th>
+                                <th>No. WA</th>
+                                <th>Nama Paket</th>
+                                <th>Harga Paket (Kg)</th>
+                                <th>Antar</th>
+                                <th>Ambil</th>
+                                <th>Pembayaran</th>
+                                <th>Total (Kg)</th>
+                                <th>Total Bayar</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 
 @section('js')
+@if(isset($dari_date) && isset($sampai_date))
+    <script>
+        var dari = "<?= $dari_date; ?>"; 
+        var sampai = "<?= $sampai_date; ?>"
+        console.log(dari); 
+        console.log(sampai); 
+    </script>
+@else
+    <script>
+        var dari = null; 
+        var sampai = null;
+    </script>
+@endif
 <script src="{{ asset('backend/assets/jsPDF/dist/jspdf.debug.js') }}" type='text/javascript'></script>
 <script>
     // chart
@@ -186,5 +239,82 @@
         });
     }
     // end chart
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    let _token   = $('meta[name="csrf-token"]').attr('content');
+
+    $("#table-1").dataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            type: 'POST',
+            url: "pesanan/list",
+            data: {
+                dari: dari,
+                sampai: sampai,
+                _token: _token
+            }
+        },
+        columns: [
+            { data: 'id_transaksi', name: 'id_transaki' },
+            { data: 'nama', name: 'nama' },
+            { data: 'no_wa', name: 'no_wa' },
+            { data: 'nama_paket', name: 'nama_paket' },
+            { data: 'harga_paket', name: 'harga_paket' },
+            { data: 'antar', name: 'antar' },
+            { data: 'ambil', name: 'ambil' },
+            { data: 'pembayaran', name: 'pembayaran' },
+            { data: 'total_kg', name: 'total_kg' },
+            { data: 'total_pembayaran', name: 'total_pembayaran' },
+            { data: 'status_cucian', name: 'status_cucian' },
+        ],
+        order: [[0, 'desc']],
+        columnDefs: [
+        {
+          targets: 8,
+          orderable: false,
+          render: function (data, type, full, meta) {
+            var total_kg = full['total_kg'];
+            if(total_kg == null) {
+                return '-';
+            } else {
+                return total_kg;
+            }
+          }
+        },
+        {
+          targets: 9,
+          orderable: false,
+          render: function (data, type, full, meta) {
+            var total_pembayaran = full['total_pembayaran'];
+            if(total_pembayaran == null) {
+                return '-';
+            } else {
+                return total_pembayaran;
+            }
+          }
+        },
+        {
+          targets: 10,
+          orderable: false,
+          render: function (data, type, full, meta) {
+            var status_cucian = full['status_cucian'];
+            return '<span class="text-uppercase">'+status_cucian+'</span>'
+          }
+        }
+      ],
+    });
+
+    new $.fn.dataTable.Buttons($("#table-1").dataTable(), {
+        buttons: [
+            'excelHtml5',
+            'pdfHtml5'
+        ]
+    }).container().appendTo($('#export'));
 </script>
 @endsection

@@ -66,7 +66,7 @@
                         <div class="section-title">Selamat Datang di</div>
                         <h1 class="h1-large">Twingky Wingky Laundry</h1>
                         <p class="p-large">Melayani jasa cuci untuk pakaian dan barang-barang yang digunakan setiap harinya.</p>
-                        <button class="btn-solid-lg">Mulai Laundry</button>
+                        <a href="{{ url('/tambah-pesanan') }}" class="btn-solid-lg">Mulai Laundry</a>
                     </div>
                 </div> 
                 <div class="col-lg-6 col-xl-7">
@@ -200,13 +200,13 @@
                 </div>
             </div> 
             <div class="row">
-                <div class="col-lg-10 offset-lg-1">
-                    <img src="{{ asset('images/5.png') }}" class="img-fluid">
+                <div class="col-12">
+                    <img src="{{ asset('images/5.png') }}" class="w-img-payment img-fluid">
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-10 offset-lg-1">
-                    <img src="{{ asset('images/6.png') }}" class="img-fluid">
+            <div class="row mt-3">
+                <div class="col-12">
+                    <img src="{{ asset('images/6.png') }}" class="w-img-payment img-fluid">
                 </div>
             </div>
         </div>

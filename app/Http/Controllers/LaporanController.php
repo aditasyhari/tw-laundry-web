@@ -10,6 +10,7 @@ use Exception;
 use Validator;
 use DB;
 use DateTime;
+use DataTables;
 
 class LaporanController extends Controller
 {
@@ -54,6 +55,8 @@ class LaporanController extends Controller
 
                 $dari = Carbon::parse($request->dari)->translatedFormat('d F Y');
                 $sampai = Carbon::parse($request->sampai)->translatedFormat('d F Y');
+                $dari_date = $request->dari;
+                $sampai_date = $request->sampai;
                 $nama_paket = [];
                 $total = [];
 
@@ -75,11 +78,59 @@ class LaporanController extends Controller
 
                 $jumlah = array_sum($total);
 
-                return view('backend.laporan.keuangan', compact(['nama_paket', 'total', 'dari', 'sampai', 'jumlah']));        
+                return view('backend.laporan.keuangan', compact(['nama_paket', 'total', 'dari', 'sampai', 'jumlah', 'dari_date', 'sampai_date']));        
             }
         } catch (Exception $e) {
             dd($e->getMessage());
             return view('error');
+        }
+    }
+
+    public function listKeuangan(Request $request)
+    {
+        if($request->ajax()) {
+            if($request->dari && $request->sampai) {
+                $data = Pesanan::orderBy('id', 'desc')
+                        ->whereDate('created_at', '>=', $request->dari)
+                        ->whereDate('created_at', '<=', $request->sampai)
+                        ->where('status_cucian', 'selesai')
+                        ->get();
+            } else {
+                $tahun = date('Y');
+                $bulan = date('m');
+                $data = Pesanan::orderBy('id', 'desc')
+                        ->whereYear('created_at', '>=', $tahun)
+                        ->whereMonth('created_at', '<=', $bulan)
+                        ->get();
+            }
+
+            return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->make(true);
+        }
+    }
+
+    public function listPesanan(Request $request)
+    {
+        if($request->ajax()) {
+            if($request->dari && $request->sampai) {
+                $data = Pesanan::orderBy('id', 'desc')
+                        ->whereDate('created_at', '>=', $request->dari)
+                        ->whereDate('created_at', '<=', $request->sampai)
+                        ->where('status_cucian', 'selesai')
+                        ->get();
+            } else {
+                $tahun = date('Y');
+                $bulan = date('m');
+                $data = Pesanan::orderBy('id', 'desc')
+                        ->whereYear('created_at', '>=', $tahun)
+                        ->whereMonth('created_at', '<=', $bulan)
+                        ->get();
+            }
+
+            return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->make(true);
         }
     }
 

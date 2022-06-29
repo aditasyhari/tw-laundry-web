@@ -83,8 +83,10 @@ Route::middleware(['auth'])->group(function() {
         
         Route::get('laporan/keuangan', [LaporanController::class, 'keuangan']);
         Route::post('laporan/keuangan', [LaporanController::class, 'keuangan']);
+        Route::post('laporan/keuangan/list', [LaporanController::class, 'listKeuangan']);
         Route::get('laporan/pesanan', [LaporanController::class, 'pesanan']);
         Route::post('laporan/pesanan', [LaporanController::class, 'pesanan']);
+        Route::post('laporan/pesanan/list', [LaporanController::class, 'listPesanan']);
         
     });
 
