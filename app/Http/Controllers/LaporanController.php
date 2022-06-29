@@ -91,14 +91,15 @@ class LaporanController extends Controller
         if($request->ajax()) {
             if($request->dari && $request->sampai) {
                 $data = Pesanan::orderBy('id', 'desc')
+                        ->where('status_cucian', 'selesai')
                         ->whereDate('created_at', '>=', $request->dari)
                         ->whereDate('created_at', '<=', $request->sampai)
-                        ->where('status_cucian', 'selesai')
                         ->get();
             } else {
                 $tahun = date('Y');
                 $bulan = date('m');
                 $data = Pesanan::orderBy('id', 'desc')
+                        ->where('status_cucian', 'selesai')
                         ->whereYear('created_at', '>=', $tahun)
                         ->whereMonth('created_at', '<=', $bulan)
                         ->get();
@@ -115,14 +116,15 @@ class LaporanController extends Controller
         if($request->ajax()) {
             if($request->dari && $request->sampai) {
                 $data = Pesanan::orderBy('id', 'desc')
+                        ->where('status_cucian', 'selesai')
                         ->whereDate('created_at', '>=', $request->dari)
                         ->whereDate('created_at', '<=', $request->sampai)
-                        ->where('status_cucian', 'selesai')
                         ->get();
             } else {
                 $tahun = date('Y');
                 $bulan = date('m');
                 $data = Pesanan::orderBy('id', 'desc')
+                        ->where('status_cucian', 'selesai')
                         ->whereYear('created_at', '>=', $tahun)
                         ->whereMonth('created_at', '<=', $bulan)
                         ->get();
