@@ -22,7 +22,7 @@ class LaporanController extends Controller
             if($method == 'GET') {
                 $paket = DB::table('jenis_paket as jp')->select(
                     'jp.nama_paket',
-                    DB::raw("(SELECT SUM(total_pembayaran) FROM pesanan as p WHERE p.id_paket = jp.id AND MONTH(created_at) = MONTH(now()) AND YEAR(created_at) = YEAR(now())) AS total")
+                    DB::raw("(SELECT SUM(total_pembayaran) FROM pesanan as p WHERE p.id_paket = jp.id AND status_cucian = 'selesai' AND MONTH(created_at) = MONTH(now()) AND YEAR(created_at) = YEAR(now())) AS total")
                 )
                 ->get();
 
@@ -65,6 +65,7 @@ class LaporanController extends Controller
                 foreach($paket as $p) {
                     array_push($nama_paket, $p->nama_paket);
                     $total_uang = Pesanan::where('id_paket', $p->id)
+                                    ->where('status_cucian', 'selesai')
                                     ->whereDate('created_at', '>=', $request->dari)
                                     ->whereDate('created_at', '<=', $request->sampai)
                                     ->sum('total_pembayaran');
@@ -143,7 +144,7 @@ class LaporanController extends Controller
             if($method == 'GET') {
                 $paket = DB::table('jenis_paket as jp')->select(
                     'jp.nama_paket',
-                    DB::raw("(SELECT COUNT(*) FROM pesanan as p WHERE p.id_paket = jp.id AND MONTH(created_at) = MONTH(now()) AND YEAR(created_at) = YEAR(now())) AS total")
+                    DB::raw("(SELECT COUNT(*) FROM pesanan as p WHERE p.id_paket = jp.id AND status_cucian = 'selesai' AND MONTH(created_at) = MONTH(now()) AND YEAR(created_at) = YEAR(now())) AS total")
                 )
                 ->get();
 
@@ -180,6 +181,7 @@ class LaporanController extends Controller
                 foreach($paket as $p) {
                     array_push($nama_paket, $p->nama_paket);
                     $total_order = Pesanan::where('id_paket', $p->id)
+                                    ->where('status_cucian', 'selesai')
                                     ->whereDate('created_at', '>=', $request->dari)
                                     ->whereDate('created_at', '<=', $request->sampai)
                                     ->count();
