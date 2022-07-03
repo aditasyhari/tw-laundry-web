@@ -42,7 +42,7 @@ if(!function_exists("gantiFormatNomor")){
 
 function checkNumberWa($number)
 {
-    $token = "SQPho4kHPKJfVPsgSGUXKujFJmC2dmjr7sijNsdh6x2EaBUhHY";
+    $token = "L92mEt1pBymGE84y7KgNCfTLC6Vbe6YnWbCt8Q6dfnZ53nTZoK";
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
@@ -67,7 +67,7 @@ function checkNumberWa($number)
 
 function sendwa($phone, $message)
 {
-    $token = "SQPho4kHPKJfVPsgSGUXKujFJmC2dmjr7sijNsdh6x2EaBUhHY";
+    $token = "L92mEt1pBymGE84y7KgNCfTLC6Vbe6YnWbCt8Q6dfnZ53nTZoK";
 
     $curl = curl_init();
     curl_setopt_array($curl, array(
