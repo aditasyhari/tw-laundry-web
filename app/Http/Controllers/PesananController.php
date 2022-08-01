@@ -283,7 +283,7 @@ class PesananController extends Controller
             DB::commit();
 
             try {
-                $pesan = "TW Laundry - Bukti Pembayaran dengan ID Transaksi $pesanan->id_transaksi ditolak. Silahkan upload kembali, pastikan yang anada upload benar !";
+                $pesan = "TW Laundry - Bukti Pembayaran dengan ID Transaksi $pesanan->id_transaksi ditolak. Silahkan upload kembali, pastikan yang anda upload benar !";
                 sendwa($pesanan->no_wa, $pesan);
             } catch (Exception $error) {
 
@@ -355,7 +355,7 @@ class PesananController extends Controller
                 $wa_kurir = User::select('no_wa')->where('id', $pesanan->id_kurir)->pluck('no_wa')->first();
                 try {
                     $pesan_kurir = "TW Laundry - Cucian dengan ID Transaksi $pesanan->id_transaksi sudah SELESAI. Silahkan datang ke Laundry dan antarkan ke alamat Pelanggan.";
-                    $pesan_customer = "TW Laundry - Cucian dengan ID Transaksi $pesanan->id_transaksi sudah SELESAI. Cucian akan segera diantar oleh Kurir, silahkan tunggu. Terimakasih.";
+                    $pesan_customer = "TW Laundry - Cucian dengan ID Transaksi $pesanan->id_transaksi sudah SELESAI. Cucian akan segera diantar oleh Kurir, silahkan tunggu. Terimakasih.\n\nSilahkan survey layanan kami melalui link berikut https://forms.gle/v5ma8mm9XKiYhCZK9";
 
                     sendwa($pesanan->no_wa, $pesan_customer);
                     sendwa($wa_kurir, $pesan_kurir);

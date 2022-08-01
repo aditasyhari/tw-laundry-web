@@ -253,8 +253,9 @@
     <div class="copyright bg-gray">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <p class="p-small statement">Copyright © <a href="#">Twingky Wingky Laundry</a></p>
+                <div class="col-lg-12 d-flex justify-content-between">
+                    <p class="p-small"><a target="_blank" href="https://forms.gle/v5ma8mm9XKiYhCZK9">Kuesioner (Survey)</a></p>
+                    <p class="p-small">Copyright © <a href="#">Twingky Wingky Laundry</a></p>
                 </div> 
             </div>
         </div>

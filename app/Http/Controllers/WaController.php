@@ -30,7 +30,7 @@ class WaController extends Controller
                     $user = User::find($user->id);
                     $user->update(['otp' => $otp]);
     
-                    $body = "Kode OTP anda adalah $otp oleh Twingky Wingky Laundry";
+                    $body = "Kode OTP anda adalah $otp oleh Twingky Wingky Laundry.\n\nSilahkan survey layanan kami melalui link berikut https://forms.gle/v5ma8mm9XKiYhCZK9";
                     $to = gantiFormatNomor($no_telp);
     
                     sendwa($to, $body);
